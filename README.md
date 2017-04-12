@@ -8,14 +8,12 @@ ________________________________________________________________________________
 
 ## Capturing Packets
 
-
-
 Use the **pcap.py** tool to capture packets.
 Run it by using
-> python pcap.py -i [interface] -c [client-networks] -s [service-networks]
+python pcap.py -i [interface] -c [client-networks] -s [service-networks]
 
 You can also specify the TCP/UDP port by using _-t_ or _-u_ respectivelly. For example:
-> python pcap.py -i eth0 -c 192.1.1.10/0 -s 0.0.0.0/0
+python pcap.py -i eth0 -c 192.1.1.10/0 -s 0.0.0.0/0
 
 With the command above we are capturing packets on the interface eth0. The client network is machine's IP on that interface and the service IP is 0.0.0.0/0, which means we will capture all the packets on the network.
 
