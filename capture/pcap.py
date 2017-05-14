@@ -36,12 +36,7 @@ def pkt_callback(pkt):
 		t = float(pkt.sniff_timestamp)
 		delta = 1
 		global k
-		k= int((t- t0)/delta)
-		#print "k: %s" %k
-		#print "time: "+str(t-t0)  
-		#if(k>10):
-		#	return
-		
+		k= int((t- t0)/delta)		
 		
 		stat_line =[0,0,0,0]
 		
@@ -76,9 +71,6 @@ def pkt_callback(pkt):
 				
 		npkts=npkts+1
 		#print (str(dic)) 
-	
-		
-		
 		
 		#if pkt.ip.proto=='17':
 			#print('%s: IP packet from %s to %s (UDP:%s) %s'%(pkt.sniff_timestamp,pkt.ip.src,pkt.ip.dst,pkt.udp.dstport,pkt.ip.len))
@@ -114,6 +106,7 @@ def main():
 	snets=[]
 	for n in args.snet:
 		try:
+			print n
 			nn=IPNetwork(n)
 			snets.append(nn)
 		except:
