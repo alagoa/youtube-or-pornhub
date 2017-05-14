@@ -20,7 +20,7 @@ def main():
 	plt.ion()
 	
 	youtubedown=np.loadtxt('../data/youtubedown')
-	browsingdown=np.loadtxt('../data/browsingdown')
+	browsingdown=np.loadtxt('../data/pornhubdown')
 	
 	test=np.loadtxt('../data/for_testing/youtube_test1')
 	
