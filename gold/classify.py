@@ -6,7 +6,6 @@ import sys
 import warnings
 import scalogram
 
-
 def calcScalogram(data):
 	N=300
 	dj=1/64
@@ -41,7 +40,7 @@ def main():
 	spotifydown=np.loadtxt('../data/spotifydown')
 	pornhubdown=np.loadtxt('../data/pornhubdown')
 	
-	test=np.loadtxt('../data/for_testing/youtube/youtube_test2')				# capture to test (can be more than one)
+	test=np.loadtxt('../data/for_testing/spotify/spotify_test1')				# capture to test (can be more than one)
 
 	########### Profiling YouTube caps ###########
 	print("Profiling YouTube caps...")
