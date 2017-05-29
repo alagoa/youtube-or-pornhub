@@ -9,7 +9,7 @@ import scipy.signal as signal
 from sklearn.cluster import KMeans
 from sklearn.decomposition import PCA
 
-def calcScalogram(data):
+def calcScalogramAvg(data):
 	N=300
 	dj=1/64
 	s0=2
@@ -23,6 +23,24 @@ def calcScalogram(data):
 	
 	average=np.mean(allS,axis=0)
 	return average,scales
+
+
+def calcScalogram(data):
+	N = 300
+	dj = 1 / 16
+	s0 = 2
+	J = 1 / dj * np.log2(0.5 * N / s0)
+	#print("J= "+str(J))
+	scales = s0 * 2 ** (np.arange(J) * dj)
+
+
+
+	allS = np.zeros((10, len(scales)))
+	for i in range(10):
+		S, scales = scalogram.scalogramCWT(data[:, i], scales)
+		allS[i, :] = S
+	return allS,scales
+
 
 def waitforEnter():
 	if sys.version_info[0] == 2:
@@ -103,21 +121,29 @@ def main():
 	V = np.concatenate((V1,V2,V3,V4),axis=0).reshape((40,1))
 	S = np.concatenate((S1,S2,S3,S4),axis=0).reshape((40,1))
 	K = np.concatenate((K1,K2,K3,K4),axis=0).reshape((40,1))
-	print(M.shape)
+
+	print(scalogramAvgPornhub.shape)
+	print(scalogramAvgYoutube.shape)
+	print(scalogramAvgSpotify.shape)
+	print(scalogramAvgBrowsing.shape)
+	Scalo = np.concatenate((scalogramAvgBrowsing,scalogramAvgPornhub,scalogramAvgSpotify,scalogramAvgYoutube), axis=0)
+	print(Scalo.shape)
+
+
 	#Pr=np.c_[Pr1,Pr2,Pr3,Pr4]
 	#features = np.c_[[M],[Md],[V],[S],[K]]
-	features = np.concatenate((M,Md,V,S,K),axis=1)
+	features = np.concatenate((M,Md,V,S,K,Scalo),axis=1)
 	########### Performing the test ###########
 
 	print("Performing the test...")
 
 	N=300
-	dj=1/64
+	dj=1/16
 	s0=2
 	J=1/dj * np.log2(0.5*N/s0)
 	scales=s0*2**(np.arange(J)*dj)
 
-	St,scales=scalogram.scalogramCWT(test,scales)
+	Sc,scales=scalogram.scalogramCWT(test,scales)
 	Mt=np.mean(test,axis=0)
 	Mdt=np.median(test,axis=0)
 	Vt=np.var(test,axis=0)
@@ -126,7 +152,7 @@ def main():
 	p=[25,50,75,90,95]
 	#Prt=np.array(np.percentile(test,p,axis=0)).T
 
-	featuresT=np.c_[[Mt],[Mdt],[Vt],[St],[Kt]]
+	featuresT=np.c_[[Mt],[Mdt],[Vt],[St],[Kt],[Sc]]
 
 	print(features)
 
