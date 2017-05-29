@@ -45,9 +45,15 @@ def main():
 	
 	test=np.loadtxt('../data/for_testing/youtube/youtube-test3')				# capture to test (can be more than one)
 
+	########### normalizing data ######################
+	youtubedown = youtubedown / youtubedown.max(axis=0)
+	browsingdown = browsingdown / browsingdown.max(axis=0)
+	spotifydown = spotifydown / spotifydown.max(axis=0)
+	pornhubdown = pornhubdown / pornhubdown.max(axis=0)
+
 	########### Profiling YouTube caps ###########
 	print("Profiling YouTube caps...")
-	#scalogramAvgYoutube,scales = calcScalogram(youtubedown)
+	scalogramAvgYoutube,scales = calcScalogram(youtubedown)
 	M1=np.mean(youtubedown,axis=0)
 	Md1=np.median(youtubedown,axis=0)
 	V1=np.var(youtubedown,axis=0)
@@ -92,14 +98,17 @@ def main():
 	#p=[25,50,75,90,95]
 	#Pr4=np.array(np.percentile(pornhubdown,p,axis=0)).T
 
-	M=np.c_[M1,M2,M3,M4]
-	Md=np.c_[Md1,Md2,Md3,Md4]
-	V=np.c_[V1,V2,V3,V4]
-	S=np.c_[S1,S2,S3,S4]
-	K=np.c_[K1,K2,K3,K4]
+	M = np.concatenate((M1,M2,M3,M4),axis=0).reshape((40,1))
+	Md = np.concatenate((Md1,Md2,Md3,Md4),axis=0).reshape((40,1))
+	V = np.concatenate((V1,V2,V3,V4),axis=0).reshape((40,1))
+	S = np.concatenate((S1,S2,S3,S4),axis=0).reshape((40,1))
+	K = np.concatenate((K1,K2,K3,K4),axis=0).reshape((40,1))
+	print(M.shape)
 	#Pr=np.c_[Pr1,Pr2,Pr3,Pr4]
-					
+	#features = np.c_[[M],[Md],[V],[S],[K]]
+	features = np.concatenate((M,Md,V,S,K),axis=1)
 	########### Performing the test ###########
+
 	print("Performing the test...")
 
 	N=300
@@ -117,7 +126,11 @@ def main():
 	p=[25,50,75,90,95]
 	#Prt=np.array(np.percentile(test,p,axis=0)).T
 
-	featuresT=np.c_[[Mt],[Mdt],[Vt],[St],[Kt], [St]]
+	featuresT=np.c_[[Mt],[Mdt],[Vt],[St],[Kt]]
+
+	print(features)
+
+	print(featuresT)
 
 	print(features.shape)
 
