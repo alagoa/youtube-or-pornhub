@@ -6,22 +6,27 @@ import matplotlib.pyplot as plt
 import utils
 import threading
 import time
+import classify
 from netaddr import IPNetwork, IPAddress, IPSet
 
 class processDataThread (threading.Thread):
-	def __init__(self, threadID, name, counter):
+	def __init__(self, threadID, name, counter, my_dic, my_npkts):
 		threading.Thread.__init__(self)
 		self.threadID = threadID
 		self.name = name
 		self.counter = counter
+		self.my_dic = my_dic
+		self.my_npkts = my_npkts
+		print("packets: " + str(my_npkts))
 	def run(self):
-		print "\n+-------------------------+"
-		print "| Starting " + self.name + str(self.threadID) + " |"
-		print "+-------------------------+"
-		save(self.threadID, self.name)
-		print "+------------------------+"
-		print "| Exiting " + self.name + str(self.threadID) + " |"
-		print "+------------------------+"
+		print("\n+-------------------------+")
+		print("| Starting " + self.name + str(self.threadID) + " |")
+		print("+-------------------------+")
+		#save(self.threadID, self.name)
+		process(self.threadID, self.name, self.my_dic, self.my_npkts)
+		print("+------------------------+")
+		print("| Exiting " + self.name + str(self.threadID) + " |")
+		print("+------------------------+")
 
 
 npkts=0
@@ -54,13 +59,13 @@ def pkt_callback(pkt):
 	global i
 
 	current = (utils.current_time() - start)
-	if(current > 10*1000):
+	if(current > 5*60*1000):
 		i+=10
 		start = utils.current_time()
-		processData_thread = processDataThread(i, "process_data", i)
+		processData_thread = processDataThread(i, "process_data", i, dic, npkts)
 		processData_thread.start()
-
-
+		npkts=0
+		dic ={}
 		
 	if IPAddress(pkt.ip.src) in scnets|ssnets and IPAddress(pkt.ip.dst) in scnets|ssnets:
 		t = float(pkt.sniff_timestamp)
@@ -90,7 +95,7 @@ def pkt_callback(pkt):
 		if IPAddress(pkt.ip.src) in ssnets: #download 
 			if lastupload != None: 
 				inter_interval_down.append(t- float(lastdownload.sniff_timestamp))
-			if dic.has_key(k):
+			if k in dic:
 				stat_line = dic[k]
 				stat_line[2]=stat_line[3]+int(pkt.ip.len)
 				stat_line[3]=stat_line[3]+1
@@ -108,6 +113,34 @@ def pkt_callback(pkt):
 			#print('%s: IP packet from %s to %s (TCP:%s) %s'%(pkt.sniff_timestamp,pkt.ip.src,pkt.ip.dst,pkt.tcp.dstport,pkt.ip.len))
 		#else:
 			#print('%s: IP packet from %s to %s (other) %s'%(pkt.sniff_timestamp, pkt.ip.src,pkt.ip.dst,pkt.ip.len))
+
+def process(id, threadName, my_dic, my_npkts):
+	global npkts
+	global npkts_up
+	global npkts_down
+	global len_up
+	global len_down
+	global t0
+	keys = []
+	values = []
+	l = []
+	for key,value in my_dic.items(): 
+		keys.append(key)
+		values.append(value) 
+
+	for key in keys:
+		#file_.write(str(dic.get(key)[1]) + "\n")
+		l.append(my_dic.get(key)[1])
+
+	del l[300:]
+	print("Classifying...")
+	classify.classify(l)
+
+#	v = list(zip(*values)) 	
+#	plt.plot(v[0], marker='o', color='r', ls='')
+#	plt.show()
+	
+	print('\n%d packets captured! Done!\n'%my_npkts)
 
 def save(id, threadName):
 	global npkts
@@ -163,7 +196,7 @@ def pcap(args):
 	snets=[]
 	for n in args.snet:
 		try:
-			print n
+			print(n)
 			nn=IPNetwork(n)
 			snets.append(nn)
 		except:

@@ -9,7 +9,7 @@ import pickle
 
 def calcScalogram(data):
 	N=300
-	dj=1/16
+	dj=1/128
 	s0=2
 	J=1/dj * np.log2(0.5*N/s0)
 	scales=s0*2**(np.arange(J)*dj)
@@ -34,27 +34,25 @@ def curveDistance(c1, c2):
 
 def predict(test):
 
-	with open("yt_scalo", 'rb') as f:
+	with open("scalo_data/yt_scalo", 'rb') as f:
 		scalogramAvgYoutube = pickle.load(f)
-	with open("br_scalo", 'rb') as f:
+	with open("scalo_data/br_scalo", 'rb') as f:
 		scalogramAvgBrowsing = pickle.load(f)
-	with open("ph_scalo", 'rb') as f:
+	with open("scalo_data/ph_scalo", 'rb') as f:
 		scalogramAvgPornhub = pickle.load(f)
-	with open("sp_scalo", 'rb') as f:
+	with open("scalo_data/sp_scalo", 'rb') as f:
 		scalogramAvgSpotify = pickle.load(f)
 
 	########### Performing the test ###########
 	print("Performing the test...")
 
 	N=300
-	dj=1/16
+	dj=1/128
 	s0=2
 	J=1/dj * np.log2(0.5*N/s0)
 	scales=s0*2**(np.arange(J)*dj)
 
 	S,scales=scalogram.scalogramCWT(test,scales)
-
-	waitforEnter()
 
 	print('\nCurve Distances:')
 
@@ -69,11 +67,11 @@ def predict(test):
 		 "PornHub"	: curveDistance(scalogramAvgPornhub,S)}
 
 	print("This is a " + str(min(d, key=d.get)) + " capture.")
-		
-	waitforEnter()
+	
 
-def main():
-	test=np.loadtxt('../data/for_testing/youtube/youtube_test1')				# capture to test (can be more than one)
+def classify(l):
+	#test=np.loadtxt('../data/for_testing/youtube/youtube_test1')				# capture to test (can be more than one)
+	test = np.asarray(l)
 	predict(test)
 
 if __name__ == "__main__":

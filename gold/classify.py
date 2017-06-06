@@ -5,10 +5,12 @@ import time
 import sys
 import warnings
 import scalogram
+import pickle
 
 def calcScalogram(data):
+
 	N=300
-	dj=1/16
+	dj=1/128
 	s0=2
 	J=1/dj * np.log2(0.5*N/s0)
 	scales=s0*2**(np.arange(J)*dj)
@@ -69,11 +71,22 @@ def main():
 	plt.show()
 	waitforEnter()
 
+
+	print(scalogramAvgYoutube)
+	with open('scalo_data/yt_scalo', 'wb') as f:
+		pickle.dump(scalogramAvgYoutube, f)
+	with open('scalo_data/br_scalo', 'wb') as f:
+		pickle.dump(scalogramAvgBrowsing, f)
+	with open('scalo_data/ph_scalo', 'wb') as f:
+		pickle.dump(scalogramAvgPornhub, f)
+	with open('scalo_data/sp_scalo', 'wb') as f:
+		pickle.dump(scalogramAvgSpotify, f)
+
 	########### Performing the test ###########
 	print("Performing the test...")
 
 	N=300
-	dj=1/16
+	dj=1/128
 	s0=2
 	J=1/dj * np.log2(0.5*N/s0)
 	scales=s0*2**(np.arange(J)*dj)
