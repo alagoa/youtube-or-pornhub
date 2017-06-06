@@ -5,6 +5,7 @@ import time
 import sys
 import warnings
 import scalogram
+import pickle
 
 def calcScalogram(data):
 	N=300
@@ -31,43 +32,16 @@ def curveDistance(c1, c2):
 	return np.mean((c2-c1)**2)
 
 
-def main():
-	########### Loading files and configuring ###########
-	plt.ion()
-	youtubedown=np.loadtxt('../data/youtubedown')
-	browsingdown=np.loadtxt('../data/browsingdown')
-	spotifydown=np.loadtxt('../data/spotifydown')
-	pornhubdown=np.loadtxt('../data/pornhubdown')
-	
-	test=np.loadtxt('../data/for_testing/spotify/spotify_test1')				# capture to test (can be more than one)
+def predict(test):
 
-	########### Profiling YouTube caps ###########
-	print("Profiling YouTube caps...")
-	scalogramAvgYoutube,scales = calcScalogram(youtubedown)
-	plt.plot(scales,scalogramAvgYoutube,'r',lw=3) 
-	plt.show()
-	waitforEnter()
-
-	########### Profiling regular browsing caps ###########
-	print("Profiling regular browsing caps...")
-	scalogramAvgBrowsing, scales = calcScalogram(browsingdown)
-	plt.plot(scales,scalogramAvgBrowsing,'b',lw=3)
-	plt.show()
-	waitforEnter()
-
-	########### Profiling Spotify caps ###########
-	print("Profiling Spotify caps...")
-	scalogramAvgSpotify,scales = calcScalogram(spotifydown)
-	plt.plot(scales,scalogramAvgSpotify,'g',lw=3)
-	plt.show()
-	waitforEnter()
-
-	########### Profiling PornHub caps ###########
-	print("Profiling PornHub caps...")
-	scalogramAvgPornhub, scales = calcScalogram(pornhubdown)
-	plt.plot(scales,scalogramAvgPornhub,'y',lw=3)
-	plt.show()
-	waitforEnter()
+	with open("yt_scalo", 'rb') as f:
+		scalogramAvgYoutube = pickle.load(f)
+	with open("br_scalo", 'rb') as f:
+		scalogramAvgBrowsing = pickle.load(f)
+	with open("ph_scalo", 'rb') as f:
+		scalogramAvgPornhub = pickle.load(f)
+	with open("sp_scalo", 'rb') as f:
+		scalogramAvgSpotify = pickle.load(f)
 
 	########### Performing the test ###########
 	print("Performing the test...")
@@ -78,10 +52,8 @@ def main():
 	J=1/dj * np.log2(0.5*N/s0)
 	scales=s0*2**(np.arange(J)*dj)
 
-	#for i in range(1,20):
 	S,scales=scalogram.scalogramCWT(test,scales)
-	plt.plot(scales,S,'m')
-	plt.show()
+
 	waitforEnter()
 
 	print('\nCurve Distances:')
@@ -99,6 +71,10 @@ def main():
 	print("This is a " + str(min(d, key=d.get)) + " capture.")
 		
 	waitforEnter()
+
+def main():
+	test=np.loadtxt('../data/for_testing/spotify/spotify_test1')				# capture to test (can be more than one)
+	predict(test)
 
 if __name__ == "__main__":
 	main()

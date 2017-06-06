@@ -3,7 +3,22 @@ import argparse
 import pyshark
 import numpy as np
 import matplotlib.pyplot as plt
+import utils
+import threading
+import time
 from netaddr import IPNetwork, IPAddress, IPSet
+
+
+class processDataThread(threading.Thread):
+	def __init__(self, threadID, name, counter):
+	  threading.Thread.__init__(self)
+	  self.threadID = threadID
+	  self.name = name
+	  self.counter = counter
+	def run(self):
+      print "Starting " + self.name
+      save()
+      print "Exiting " + self.name
 
 npkts=0
 npkts_up=0
@@ -15,6 +30,7 @@ t=0
 dic ={}
 inter_interval_down=[]
 inter_interval_up=[]
+
 
 def pkt_callback(pkt):
 	global scnets
@@ -31,6 +47,11 @@ def pkt_callback(pkt):
 	global lastdownload
 	global inter_interval_down
 	global inter_interval_up
+	global start
+
+	i = (utils.current_time() - start)
+	if(i > 30*1000):
+		processData_thread = processDataThread(i, "process_data", i)
 		
 	if IPAddress(pkt.ip.src) in scnets|ssnets and IPAddress(pkt.ip.dst) in scnets|ssnets:
 		t = float(pkt.sniff_timestamp)
@@ -79,16 +100,40 @@ def pkt_callback(pkt):
 		#else:
 			#print('%s: IP packet from %s to %s (other) %s'%(pkt.sniff_timestamp, pkt.ip.src,pkt.ip.dst,pkt.ip.len))
 
-def main():
-	k = 0
-	parser=argparse.ArgumentParser()
-	parser.add_argument('-i', '--interface', nargs='?',required=True, help='capture interface')
-	parser.add_argument('-c', '--cnet', nargs='+',required=True, help='client network(s)')
-	parser.add_argument('-s', '--snet', nargs='+',required=True, help='service network(s)')
-	parser.add_argument('-t', '--tcpport', nargs='?',help='service TCP port (or range)')
-	parser.add_argument('-u', '--udpport', nargs='?',help='service UDP port (or range)')
-	args=parser.parse_args()
+def save():
+	global npkts
+	global npkts_up
+	global npkts_down
+	global len_up
+	global len_down
+	global t0
+	keys = []
+	values = []
 	
+	file_ = open('stats', 'w')
+	#file_.write('npkts:'+str(npkts)+'\n')
+	#file_.write('npkts_down:'+ str(npkts_down)+'\n') 
+	#file_.write('npkts_up:'+ str(npkts_up)+'\n')
+	file_.write(str(dic))
+	file_.close()
+
+	file_ = open('down', 'w')
+	for key,value in dic.items(): 
+		keys.append(key)
+		values.append(value) 
+	 
+	for key in keys:
+		file_.write(str(dic.get(key)[1]) + "\n")
+
+	v = list(zip(*values)) 	
+	plt.plot(v[0], marker='o', color='r', ls='')
+	plt.show()
+	
+	print('\n%d packets captured! Done!\n'%npkts)
+
+
+def pcap(args):
+
 	cnets=[]
 	for n in args.cnet:
 		try:
@@ -127,6 +172,8 @@ def main():
 		cfilter='ip'
 	
 	cint=args.interface
+	global start
+	start = utils.current_time()
 	print('Filter: %s on %s'%(cfilter,cint))
 	try:
 		capture = pyshark.LiveCapture(interface=cint,bpf_filter=cfilter)
@@ -134,35 +181,7 @@ def main():
 		print(inter_interval_down)
 		print(inter_interval_up)
 	except KeyboardInterrupt:
-		global npkts
-		global npkts_up
-		global npkts_down
-		global len_up
-		global len_down
-		global t0
-		keys = []
-		values = []
-		
-		file_ = open('stats', 'w')
-		#file_.write('npkts:'+str(npkts)+'\n')
-		#file_.write('npkts_down:'+ str(npkts_down)+'\n') 
-		#file_.write('npkts_up:'+ str(npkts_up)+'\n')
-		file_.write(str(dic))
-		file_.close()
-
-		file_ = open('down', 'w')
-		for key,value in dic.items(): 
-			keys.append(key)
-			values.append(value) 
-		 
-		for key in keys:
-			file_.write(str(dic.get(key)[1]) + "\n")
-
-		v = list(zip(*values)) 	
-		plt.plot(v[0], marker='o', color='r', ls='')
-		plt.show()
-		
-		print('\n%d packets captured! Done!\n'%npkts)
+		save()
 
 if __name__ == '__main__':
     main()

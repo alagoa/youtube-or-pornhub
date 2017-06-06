@@ -8,6 +8,9 @@ import scipy.stats as stats
 import scipy.signal as signal
 from sklearn.cluster import KMeans
 from sklearn.decomposition import PCA
+from sklearn.neural_network import MLPClassifier
+
+
 
 def calcScalogramAvg(data):
 	N=300
@@ -60,8 +63,10 @@ def main():
 	browsingdown=np.loadtxt('../data/browsingdown')
 	spotifydown=np.loadtxt('../data/spotifydown')
 	pornhubdown=np.loadtxt('../data/pornhubdown')
+	Classification=[3,3,3,3,3,3,3,3,3,3,2,2,2,2,2,2,2,2,2,2,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0]
+
 	
-	test=np.loadtxt('../data/for_testing/youtube/youtube-test3')				# capture to test (can be more than one)
+	test=np.loadtxt('../data/for_testing/spotify/spotify_test1')				# capture to test (can be more than one)
 
 	########### normalizing data ######################
 	youtubedown = youtubedown / youtubedown.max(axis=0)
@@ -77,8 +82,8 @@ def main():
 	V1=np.var(youtubedown,axis=0)
 	S1=stats.skew(youtubedown)
 	K1=stats.kurtosis(youtubedown)
-	#p=[25,50,75,90,95]
-	#Pr1=np.array(np.percentile(youtubedown,p,axis=0)).T
+	p=[25,50,75,90,95]
+	Pr1=np.array(np.percentile(youtubedown,p,axis=0)).T
 
 	np.array([M1,Md1,V1,S1,K1])
 	
@@ -91,8 +96,8 @@ def main():
 	V2=np.var(browsingdown,axis=0)
 	S2=stats.skew(browsingdown)
 	K2=stats.kurtosis(browsingdown)
-	#p=[25,50,75,90,95]
-	#Pr2=np.array(np.percentile(browsingdown,p,axis=0)).T
+	p=[25,50,75,90,95]
+	Pr2=np.array(np.percentile(browsingdown,p,axis=0)).T
 	
 	########### Profiling Spotify caps ###########
 	print("Profiling Spotify caps...")
@@ -102,8 +107,8 @@ def main():
 	V3=np.var(spotifydown,axis=0)
 	S3=stats.skew(spotifydown)
 	K3=stats.kurtosis(spotifydown)
-	#p=[25,50,75,90,95]
-	#Pr3=np.array(np.percentile(spotifydown,p,axis=0)).T
+	p=[25,50,75,90,95]
+	Pr3=np.array(np.percentile(spotifydown,p,axis=0)).T
 
 	########### Profiling PornHub caps ###########
 	print("Profiling PornHub caps...")
@@ -113,14 +118,15 @@ def main():
 	V4=np.var(pornhubdown,axis=0)
 	S4=stats.skew(pornhubdown)
 	K4=stats.kurtosis(pornhubdown)
-	#p=[25,50,75,90,95]
-	#Pr4=np.array(np.percentile(pornhubdown,p,axis=0)).T
+	p=[25,50,75,90,95]
+	Pr4=np.array(np.percentile(pornhubdown,p,axis=0)).T
 
-	M = np.concatenate((M1,M2,M3,M4),axis=0).reshape((40,1))
+	#M = np.concatenate((M1,M2,M3,M4),axis=0).reshape((40,1))
 	Md = np.concatenate((Md1,Md2,Md3,Md4),axis=0).reshape((40,1))
 	V = np.concatenate((V1,V2,V3,V4),axis=0).reshape((40,1))
 	S = np.concatenate((S1,S2,S3,S4),axis=0).reshape((40,1))
 	K = np.concatenate((K1,K2,K3,K4),axis=0).reshape((40,1))
+	Pr = np.concatenate((Pr1,Pr2,Pr3,Pr4),axis=0)
 
 	print(scalogramAvgPornhub.shape)
 	print(scalogramAvgYoutube.shape)
@@ -132,7 +138,7 @@ def main():
 
 	#Pr=np.c_[Pr1,Pr2,Pr3,Pr4]
 	#features = np.c_[[M],[Md],[V],[S],[K]]
-	features = np.concatenate((M,Md,V,S,K,Scalo),axis=1)
+	features = np.concatenate((Md,V,S,K,Pr,Scalo),axis=1)
 	########### Performing the test ###########
 
 	print("Performing the test...")
@@ -150,9 +156,9 @@ def main():
 	St=stats.skew(test)
 	Kt=stats.kurtosis(test)
 	p=[25,50,75,90,95]
-	#Prt=np.array(np.percentile(test,p,axis=0)).T
+	Prt=np.array(np.percentile(test,p,axis=0)).T
 
-	featuresT=np.c_[[Mt],[Mdt],[Vt],[St],[Kt],[Sc]]
+	featuresT=np.c_[ [Mdt],[Vt],[St],[Kt],[Prt],	[Sc]]
 
 	print(features)
 
@@ -166,15 +172,42 @@ def main():
 	### Clustering with K-means ###
 	###############################
 
-	print('Clustering with K-Means')
+#	print('Clustering with K-Means')
+#	#K-means assuming 2 clusters
+#	kmeans = KMeans(init='k-means++', n_clusters=4)
+#	kmeans.fit(features)
+#	L=kmeans.labels_
+#	print('class (from features) data1:',L)
+#	#prediction/classification of data2
+#	LT=kmeans.predict(featuresT)
+#	print('class (from features) data2:',LT)
+
+
+	#data transformation and clustering definion with data1
+#	pca = PCA(n_components=4)
+#	rcp=pca.fit(features).transform(features)
 	#K-means assuming 2 clusters
-	kmeans = KMeans(init='k-means++', n_clusters=4)
-	kmeans.fit(features)
-	L=kmeans.labels_
-	print('class (from features) data1:',L)
+#	kmeans = KMeans(init='k-means++', n_clusters=4)
+#	kmeans.fit(rcp)
+#	L=kmeans.labels_
+#	print('class (after PCA) data1:',L)
+
 	#prediction/classification of data2
-	LT=kmeans.predict(featuresT)
+#	rcpT =pca.transform(featuresT)
+#	LT=kmeans.predict(rcpT)
+#	print('class (after PCA) data2:',LT)
+
+
+	print('\nNeural Networks')
+	alpha=1
+	max_iter=100000
+	clf = MLPClassifier(solver='lbfgs',alpha=alpha,hidden_layer_sizes=(100,),max_iter=max_iter)
+	clf.fit(features, Classification) 
+	L=clf.predict(features) 
+	print('class (from features) data1:',L)
+	LT=clf.predict(featuresT) 
 	print('class (from features) data2:',LT)
+	print('\n')
 
 if __name__ == "__main__":
 	main()
