@@ -3,8 +3,10 @@ import json
 from flask import Flask
 from app import zeno, thread_pcap, classify
 from utils import utils, netutils, globalvar
+from flask_cors import CORS, cross_origin
 
 app = Flask(__name__)
+CORS(app)
 
 @app.route("/last-second-bytes")
 def hello():

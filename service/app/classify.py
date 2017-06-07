@@ -73,7 +73,7 @@ def predict(test):
 	
 	globalvar.last_scalogram = S.tolist()
 	globalvar.last_scales = scales.tolist()
-	globalvar.service = str(min(d, key=d.get))
+	globalvar.last_service = str(min(d, key=d.get))
 
 def classify(l):
 	#test=np.loadtxt('../data/for_testing/youtube/youtube_test1')				# capture to test (can be more than one)
