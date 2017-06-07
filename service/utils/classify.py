@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import time
 import sys
 import warnings
-import scalogram
+from lib import scalogram
 import pickle
 
 def calcScalogram(data):

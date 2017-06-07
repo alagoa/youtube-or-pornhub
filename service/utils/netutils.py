@@ -14,15 +14,15 @@ def get_lan_ip():
     ip = socket.gethostbyname(socket.gethostname())
     if ip.startswith("127.") and os.name != "nt":
         interfaces = [
-            "eth0",
-            "eth1",
-            "eth2",
-            "wlan0",
-            "wlan1",
-            "wifi0",
-            "ath0",
-            "ath1",
-            "ppp0",
+            b"eth0",
+            b"eth1",
+            b"eth2",
+            b"wlan0",
+            b"wlan1",
+            b"wifi0",
+            b"ath0",
+            b"ath1",
+            b"ppp0",
             ]
         for ifname in interfaces:
             try:

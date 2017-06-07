@@ -3,31 +3,7 @@ import argparse
 import pyshark
 import numpy as np
 import matplotlib.pyplot as plt
-import utils
-import threading
-import time
-import classify
 from netaddr import IPNetwork, IPAddress, IPSet
-
-class processDataThread (threading.Thread):
-	def __init__(self, threadID, name, counter, my_dic, my_npkts):
-		threading.Thread.__init__(self)
-		self.threadID = threadID
-		self.name = name
-		self.counter = counter
-		self.my_dic = my_dic
-		self.my_npkts = my_npkts
-		print("packets: " + str(my_npkts))
-	def run(self):
-		print("\n+-------------------------+")
-		print("| Starting " + self.name + str(self.threadID) + " |")
-		print("+-------------------------+")
-		#save(self.threadID, self.name)
-		process(self.threadID, self.name, self.my_dic, self.my_npkts)
-		print("+------------------------+")
-		print("| Exiting " + self.name + str(self.threadID) + " |")
-		print("+------------------------+")
-
 
 npkts=0
 npkts_up=0
@@ -55,17 +31,6 @@ def pkt_callback(pkt):
 	global lastdownload
 	global inter_interval_down
 	global inter_interval_up
-	global start
-	global i
-
-	current = (utils.current_time() - start)
-	if(current > 5*60*1000):
-		i+=10
-		start = utils.current_time()
-		processData_thread = processDataThread(i, "process_data", i, dic, npkts)
-		processData_thread.start()
-		npkts=0
-		dic ={}
 		
 	if IPAddress(pkt.ip.src) in scnets|ssnets and IPAddress(pkt.ip.dst) in scnets|ssnets:
 		t = float(pkt.sniff_timestamp)
@@ -95,7 +60,7 @@ def pkt_callback(pkt):
 		if IPAddress(pkt.ip.src) in ssnets: #download 
 			if lastupload != None: 
 				inter_interval_down.append(t- float(lastdownload.sniff_timestamp))
-			if k in dic:
+			if dic.has_key(k):
 				stat_line = dic[k]
 				stat_line[2]=stat_line[3]+int(pkt.ip.len)
 				stat_line[3]=stat_line[3]+1
@@ -114,71 +79,16 @@ def pkt_callback(pkt):
 		#else:
 			#print('%s: IP packet from %s to %s (other) %s'%(pkt.sniff_timestamp, pkt.ip.src,pkt.ip.dst,pkt.ip.len))
 
-def process(id, threadName, my_dic, my_npkts):
-	global npkts
-	global npkts_up
-	global npkts_down
-	global len_up
-	global len_down
-	global t0
-	keys = []
-	values = []
-	l = []
-	for key,value in my_dic.items(): 
-		keys.append(key)
-		values.append(value) 
-
-	for key in keys:
-		#file_.write(str(dic.get(key)[1]) + "\n")
-		l.append(my_dic.get(key)[1])
-
-	del l[300:]
-	print("Classifying...")
-	classify.classify(l)
-
-#	v = list(zip(*values)) 	
-#	plt.plot(v[0], marker='o', color='r', ls='')
-#	plt.show()
+def main():
+	k = 0
+	parser=argparse.ArgumentParser()
+	parser.add_argument('-i', '--interface', nargs='?',required=True, help='capture interface')
+	parser.add_argument('-c', '--cnet', nargs='+',required=True, help='client network(s)')
+	parser.add_argument('-s', '--snet', nargs='+',required=True, help='service network(s)')
+	parser.add_argument('-t', '--tcpport', nargs='?',help='service TCP port (or range)')
+	parser.add_argument('-u', '--udpport', nargs='?',help='service UDP port (or range)')
+	args=parser.parse_args()
 	
-	print('\n%d packets captured! Done!\n'%my_npkts)
-
-def save(id, threadName):
-	global npkts
-	global npkts_up
-	global npkts_down
-	global len_up
-	global len_down
-	global t0
-	keys = []
-	values = []
-	
-	file_ = open('stats', 'w')
-	#file_.write('npkts:'+str(npkts)+'\n')
-	#file_.write('npkts_down:'+ str(npkts_down)+'\n') 
-	#file_.write('npkts_up:'+ str(npkts_up)+'\n')
-	file_.write(str(dic))
-	file_.close()
-
-	file_ = open('down' + str(id), 'w')
-	for key,value in dic.items(): 
-		keys.append(key)
-		values.append(value) 
-	 
-	for key in keys:
-		file_.write(str(dic.get(key)[1]) + "\n")
-
-	v = list(zip(*values)) 	
-#	plt.plot(v[0], marker='o', color='r', ls='')
-#	plt.show()
-	
-	print('\n%d packets captured! Done!\n'%npkts)
-
-#	threadName.stop()
-
-def pcap(args):
-	global i
-	i = 0
-
 	cnets=[]
 	for n in args.cnet:
 		try:
@@ -196,7 +106,7 @@ def pcap(args):
 	snets=[]
 	for n in args.snet:
 		try:
-			print(n)
+			print n
 			nn=IPNetwork(n)
 			snets.append(nn)
 		except:
@@ -217,8 +127,6 @@ def pcap(args):
 		cfilter='ip'
 	
 	cint=args.interface
-	global start
-	start = utils.current_time()
 	print('Filter: %s on %s'%(cfilter,cint))
 	try:
 		capture = pyshark.LiveCapture(interface=cint,bpf_filter=cfilter)
@@ -226,7 +134,35 @@ def pcap(args):
 		print(inter_interval_down)
 		print(inter_interval_up)
 	except KeyboardInterrupt:
-		sys.exit(0)
+		global npkts
+		global npkts_up
+		global npkts_down
+		global len_up
+		global len_down
+		global t0
+		keys = []
+		values = []
+		
+		file_ = open('stats', 'w')
+		#file_.write('npkts:'+str(npkts)+'\n')
+		#file_.write('npkts_down:'+ str(npkts_down)+'\n') 
+		#file_.write('npkts_up:'+ str(npkts_up)+'\n')
+		file_.write(str(dic))
+		file_.close()
+
+		file_ = open('down', 'w')
+		for key,value in dic.items(): 
+			keys.append(key)
+			values.append(value) 
+		 
+		for key in keys:
+			file_.write(str(dic.get(key)[1]) + "\n")
+
+		v = list(zip(*values)) 	
+		plt.plot(v[0], marker='o', color='r', ls='')
+		plt.show()
+		
+		print('\n%d packets captured! Done!\n'%npkts)
 
 if __name__ == '__main__':
     main()

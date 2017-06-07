@@ -3,11 +3,11 @@ import argparse
 import pyshark
 import numpy as np
 import matplotlib.pyplot as plt
-import utils
+from lib import utils
 from netaddr import IPNetwork, IPAddress, IPSet
 import threading
 import time
-import thread_pcap
+from lib import thread_pcap
 
 
 class getDataThread (threading.Thread):

@@ -15,6 +15,8 @@ def calcScalogram(data):
 	J=1/dj * np.log2(0.5*N/s0)
 	scales=s0*2**(np.arange(J)*dj)
 
+	print(scales.shape)
+
 	allS=np.zeros((10,len(scales)))
 	for i in range(10):
 		S,scales=scalogram.scalogramCWT(data[:,i],scales)
