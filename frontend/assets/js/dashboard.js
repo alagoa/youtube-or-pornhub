@@ -74,26 +74,7 @@ dashboard.getScalogram = function () {
 	
 }
 
-	
-	/*for (var i = -limit/2; i <= limit/2; i++) {
-		y += (Math.random() * 10 - 5);
-		dateTime = new Date(1960, 08, 15);
-
-		// dateTime.setMilliseconds(dateTime.getMilliseconds() + i);
-		// dateTime.setSeconds(dateTime.getSeconds() + i);
-		// dateTime.setMinutes(dateTime.getMinutes() + i);
-		// dateTime.setHours(dateTime.getHours() + i);
-		dateTime.setDate(dateTime.getDate() + i);
-		// dateTime.setMonth(dateTime.getMonth() + i);
-		// dateTime.setFullYear(dateTime.getFullYear() + i);
-
-		dataPoints.push({
-			x: dateTime,
-			y: y
-		});
-	}*/
-
-	
+		
 
 	var updateChart = function() {
 		$.ajax({
