@@ -65,20 +65,16 @@ dashboard.getGraph = function () {
 
 dashboard.getScalogram = function () {
 
+	var windowload = window.onload;
+
 	window.onload = function () {
 
+	windowload.call(this);	
 	
-
+	
+}
 
 	
-
-
-	var limit = 100000;    
-
-	var y = 0;
-	var data = []; var dataSeries = { type: "line" };
-	var dataPoints = [];
-	var xvalues = []; 
 	/*for (var i = -limit/2; i <= limit/2; i++) {
 		y += (Math.random() * 10 - 5);
 		dateTime = new Date(1960, 08, 15);
@@ -97,26 +93,39 @@ dashboard.getScalogram = function () {
 		});
 	}*/
 
-	for (var i = 1 ; i<=300 ; i++){
-		xvalues.push(i);
-	}
+	
 
-	$.ajax({
+	var updateChart = function() {
+		$.ajax({
 			url: 'http://10.0.2.15:5000/results',
 			success: function (rdata) {
+
+				var limit = 100000;    
+
+				var y = 0;
+				var data = []; var dataSeries = { type: "line" };
+				var dataPoints = [];
+				var xvalues = []; 
+				var jdata = JSON.parse(rdata);
+
+				for (var i = 1 ; i<=300 ; i++){
+					//xvalues.push(i);
+					dataPoints.push({
+					x: i,
+					y: jdata.scalogram[i-1] 
+				});
+				}
 				
 									
-				var jdata = JSON.parse(rdata)
-
 				
 				
-				dataPoints.push({
-					x: xvalues,
-					y: jdata.scalogram 
-				});
+				dashboard.getClassification(jdata.service)		
+				
 
 				dataSeries.dataPoints = dataPoints;
+				
 				data.push(dataSeries);   
+				
 
 				var chart = new CanvasJS.Chart("scalogramContainer",
 				{
@@ -134,75 +143,44 @@ dashboard.getScalogram = function () {
 					data: data  
 
 					
-				});            
+				});  
+
+				console.log(data);
 				chart.render();
+		          
+				
 			}
 		});
-    }
+
+	}
+
+	updateChart(); 
+	
+    
 
 
 }
 
-dashboard.getClassification = function () {
+dashboard.getClassification = function ( service ) {
+	
+	var img = $("#serviceimg")[0];
+	console.log(img); 
 
-}
-
-dashboard.getDemoChart = function() {
-	window.onload = function () {
-    
-    $.ajax({
-			url: 'http://10.0.2.15:5000/results',
-			success: function (rdata) {
-				var jdata = rdata.scalogram ; 
-				updateChart(jdata); 
-			}
-	});
-   	
-   	var updateChart = function(udata){
-   		var limit = 100000;    //increase number of dataPoints by increasing this
-	   
-		   var y = 0;
-		   var data = []; var dataSeries = { type: "line" };
-		   var dataPoints = [];
-		   for (var i = 0; i < limit; i += 1) {
-		    y += (Math.random() * 10 - 5);
-		    dataPoints.push({
-		      x: i - limit / 2,
-		      y: y                
-		    });
-		  }
-		  dataSeries.dataPoints = dataPoints;
-		  data.push(udata);   
-
-		  var chart = new CanvasJS.Chart("achartContainer",
-	    {
-	      zoomEnabled: true,
-	      title:{
-	        text: "Stress Test: 100,000 Data Points" 
-	      },
-	      animationEnabled: true,
-	      axisX:{
-	        labelAngle: 30
-	      },
-	      
-	      axisY :{
-	        includeZero:false
-	      },
-	      
-	      data: data  // random generator below
-	      
-	    });
-
-    	chart.render();            
-   	}
-
-    
-  }
+	if(service == "YouTube"){
+		img.src = "assets/img/youtube.png";
+	}
+	else if(service == "Spotify"){
+		img.src = "assets/img/spotify.png";
+	}
+	else if(service == "PornHub"){
+		img.src = "assets/img/pornhub.jpg";
+	}
+	else{
+		img.src = "assets/img/chrome.png";
+	}
 
 
+	
 
-  
-   
-  
 }
 
