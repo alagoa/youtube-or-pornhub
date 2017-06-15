@@ -4,6 +4,12 @@
 	text-align: center;
 }
 
+.logo > img{
+	max-width: 50%;
+	max-height: 50%;
+	text-align: center;
+}
+
 .serviceimg {
 	height: 20vh; 
 }
