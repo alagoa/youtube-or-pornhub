@@ -104,7 +104,7 @@ def pkt_callback(pkt):
 			dic.update({k:stat_line})	
 			lastdownload = pkt
 			globalvar.last_second_bytes = stat_line[2]
-				
+			
 		npkts=npkts+1
 		#print (str(dic)) 
 		

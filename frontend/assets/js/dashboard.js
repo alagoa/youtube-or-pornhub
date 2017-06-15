@@ -1,5 +1,6 @@
 var dashboard = dashboard || {};
 
+var url = 'http://192.168.33.166:5000/'
 
 
 dashboard.getGraph = function () {
@@ -29,7 +30,7 @@ dashboard.getGraph = function () {
 		var updateChart = function (count) {
 
 			$.ajax({
-				url: 'http://10.0.2.15:5000/last-second-bytes',
+				url: url + 'last-second-bytes',
 				success: function (data) {
 					count = count || 1;
 										
@@ -97,7 +98,7 @@ dashboard.getScalogram = function () {
 
 	var updateChart = function() {
 		$.ajax({
-			url: 'http://10.0.2.15:5000/results',
+			url: url + 'results',
 			success: function (rdata) {
 
 				var limit = 100000;    
