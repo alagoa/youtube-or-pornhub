@@ -7,7 +7,7 @@ import warnings
 import scalogram
 import pickle
 
-def calcScalogram(data):
+def calcScalogram(data, x):
 
 	N=300
 	dj=1/128
@@ -15,8 +15,8 @@ def calcScalogram(data):
 	J=1/dj * np.log2(0.5*N/s0)
 	scales=s0*2**(np.arange(J)*dj)
 
-	allS=np.zeros((10,len(scales)))
-	for i in range(10):
+	allS=np.zeros((x,len(scales)))
+	for i in range(x):
 		S,scales=scalogram.scalogramCWT(data[:,i],scales)
 		allS[i,:]=S
 	
@@ -45,28 +45,28 @@ def main():
 
 	########### Profiling YouTube caps ###########
 	print("Profiling YouTube caps...")
-	scalogramAvgYoutube,scales = calcScalogram(youtubedown)
+	scalogramAvgYoutube,scales = calcScalogram(youtubedown, 20)
 	plt.plot(scales,scalogramAvgYoutube,'r',lw=3) 
 	plt.show()
 	waitforEnter()
 
 	########### Profiling regular browsing caps ###########
 	print("Profiling regular browsing caps...")
-	scalogramAvgBrowsing, scales = calcScalogram(browsingdown)
+	scalogramAvgBrowsing, scales = calcScalogram(browsingdown, 10)
 	plt.plot(scales,scalogramAvgBrowsing,'b',lw=3)
 	plt.show()
 	waitforEnter()
 
 	########### Profiling Spotify caps ###########
 	print("Profiling Spotify caps...")
-	scalogramAvgSpotify,scales = calcScalogram(spotifydown)
+	scalogramAvgSpotify,scales = calcScalogram(spotifydown, 10)
 	plt.plot(scales,scalogramAvgSpotify,'g',lw=3)
 	plt.show()
 	waitforEnter()
 
 	########### Profiling PornHub caps ###########
 	print("Profiling PornHub caps...")
-	scalogramAvgPornhub, scales = calcScalogram(pornhubdown)
+	scalogramAvgPornhub, scales = calcScalogram(pornhubdown, 10)
 	plt.plot(scales,scalogramAvgPornhub,'y',lw=3)
 	plt.show()
 	waitforEnter()
