@@ -59,14 +59,14 @@ def main():
 
 	########### Profiling Spotify caps ###########
 	print("Profiling Spotify caps...")
-	scalogramAvgSpotify,scales = calcScalogram(spotifydown, 10)
+	scalogramAvgSpotify,scales = calcScalogram(spotifydown, 20)
 	plt.plot(scales,scalogramAvgSpotify,'g',lw=3)
 	plt.show()
 	waitforEnter()
 
 	########### Profiling PornHub caps ###########
 	print("Profiling PornHub caps...")
-	scalogramAvgPornhub, scales = calcScalogram(pornhubdown, 10)
+	scalogramAvgPornhub, scales = calcScalogram(pornhubdown, 20)
 	plt.plot(scales,scalogramAvgPornhub,'y',lw=3)
 	plt.show()
 	waitforEnter()
