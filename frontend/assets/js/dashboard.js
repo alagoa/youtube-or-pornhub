@@ -1,7 +1,6 @@
 var dashboard = dashboard || {};
 
-var url = 'http://192.168.33.166:5000/'
-
+var apiurl = 'http://10.0.2.15:5000'
 
 dashboard.getGraph = function () {
 
@@ -30,7 +29,7 @@ dashboard.getGraph = function () {
 		var updateChart = function (count) {
 
 			$.ajax({
-				url: url + 'last-second-bytes',
+				url: apiurl+'/last-second-bytes',
 				success: function (data) {
 					count = count || 1;
 										
@@ -71,15 +70,17 @@ dashboard.getScalogram = function () {
 	window.onload = function () {
 
 	windowload.call(this);	
+
+	
 	
 	
 }
 
-		
+	var updateIntervalC = 1000 * 60; 	
 
 	var updateChart = function() {
 		$.ajax({
-			url: url + 'results',
+			url: apiurl+'/results',
 			success: function (rdata) {
 
 				var limit = 100000;    
@@ -137,6 +138,8 @@ dashboard.getScalogram = function () {
 	}
 
 	updateChart(); 
+	// update chart after specified time. 
+	setInterval(function(){updateChart()}, updateIntervalC); 
 	
     
 
