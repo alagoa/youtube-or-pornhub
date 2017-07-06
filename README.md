@@ -1,40 +1,45 @@
 # youtube-or-pornhub
 
-**YoutubeOrPornhub** is a tool that, by analyzing the traffic of a given network, can detect what service is being used. It can detect if the user is browsing, listening to Spotify (or both), watching a Youtube video... and even differentiate it from a Pornhub video!
+**Zeno** is a tool that, by analyzing the traffic of a given network, can detect what service is being used. It can detect if the user is browsing, listening to Spotify (or both), watching a Youtube video... and even differentiate it from a Pornhub video!
 
 The analysis of the traffic is non-intrusive, so this will work even on ciphered traffic.
 
-____________________________________________________________________________________________
+___________________________________________________________________________________________
 
-## Capturing Packets
+## Dependencies:
 
-Use the **pcap.py** tool to capture packets.
-Run it by using
-```shel
-python pcap.py -i [interface] -c [client-networks] -s [service-networks]
-```
+- [Tshark](https://www.wireshark.org/docs/man-pages/tshark.html)
+	```sudo apt-get install tshark```
 
-You can also specify the TCP/UDP port by using _-t_ or _-u_ respectivelly. For example:
-```shell
-python pcap.py -i eth0 -c 192.1.1.10/0 -s 0.0.0.0/0
-```
+- [PyShark](https://github.com/KimiNewt/pyshark)
+    ```pip3 install pyshark```
 
-With the command above we are capturing packets on the interface eth0. The client network is machine's IP on that interface and the service IP is 0.0.0.0/0, which means we will capture all the packets on the network.
+- [Netaddr](https://github.com/drkjam/netaddr)
+	```pip3 install netaddr```
 
-By default, this will capture the received/sent packets in intervals of 1 second. 
+- [SciPy](https://github.com/scipy/scipy)
+	```pip3 install scipy```
 
-To stop the capture, press Ctrl-C.
+- [NumPy](http://www.numpy.org/)
+	```pip3 install numpy```
 
-DISCLAIMER: THIS WILL CHANGE
-			
-The output will be a file named 'down' with one number per line, representing the number of bytes downloaded on a certain interval. For example, if the interval was 1 second:
+- [Matplotlib](https://matplotlib.org/)
+	```pip3 install matplotlib```
 
-```shell
-400	# [0-1s]
-509	# [1-2s]
-23	# [2-3s]
-4	# [3-4s]
-```
-_____________________________________________________________________________________________
+- [Flask](http://flask.pocoo.org/)
+    ```pip3 install flask flask-cors```
+
+## Usage
+
+Go into the **zeno** folder and run the file **api.py** as such:
+
+```python3 api.py -i [interface] -c [client-networks] -s [service-networks]```
+
+For example:
+
+```python pcap.py -i eth0 -c 192.1.1.10/0 -s 0.0.0.0/0```
 
 
+With the command above we are capturing packets on the interface eth0. The client network is the IP on that interface and the service IP is 0.0.0.0/0, which means we will capture all the arriving packets.
+
+**NOTE**: You may need to run the above command as root, if you don't have permissions to use _tshark_. Other solutions can be found [here](https://wiki.wireshark.org/CaptureSetup/CapturePrivileges).
