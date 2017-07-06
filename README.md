@@ -29,8 +29,6 @@ ________________________________________________________________________________
 - [Flask](http://flask.pocoo.org/)
     ```pip3 install flask flask-cors```
 
-_____________________________________________________________________________
-
 ## Usage
 
 Go into the **zeno** folder and run the file **api.py** as such:
