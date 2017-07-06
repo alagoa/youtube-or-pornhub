@@ -1,0 +1,173 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/bin/nodejs', '/usr/bin/npm', 'install', 'ttystudio', '-g' ]
+2 info using npm@1.4.21
+3 info using node@v4.7.2
+4 verbose cache add [ 'ttystudio', null ]
+5 verbose cache add name=undefined spec="ttystudio" args=["ttystudio",null]
+6 verbose parsed url Url {
+6 verbose parsed url   protocol: null,
+6 verbose parsed url   slashes: null,
+6 verbose parsed url   auth: null,
+6 verbose parsed url   host: null,
+6 verbose parsed url   port: null,
+6 verbose parsed url   hostname: null,
+6 verbose parsed url   hash: null,
+6 verbose parsed url   search: null,
+6 verbose parsed url   query: null,
+6 verbose parsed url   pathname: 'ttystudio',
+6 verbose parsed url   path: 'ttystudio',
+6 verbose parsed url   href: 'ttystudio' }
+7 silly lockFile 2d6c1bd8-ttystudio ttystudio
+8 verbose lock ttystudio /home/agro/.npm/2d6c1bd8-ttystudio.lock
+9 silly lockFile 2d6c1bd8-ttystudio ttystudio
+10 silly lockFile 2d6c1bd8-ttystudio ttystudio
+11 verbose addNamed [ 'ttystudio', '' ]
+12 verbose addNamed [ null, '*' ]
+13 silly lockFile 9fc48214-ttystudio ttystudio@
+14 verbose lock ttystudio@ /home/agro/.npm/9fc48214-ttystudio.lock
+15 silly addNameRange { name: 'ttystudio', range: '*', hasData: false }
+16 verbose request where is /ttystudio
+17 verbose request registry https://registry.npmjs.org/
+18 verbose request id 7f118e2f5f70a8d1
+19 verbose url raw /ttystudio
+20 verbose url resolving [ 'https://registry.npmjs.org/', './ttystudio' ]
+21 verbose url resolved https://registry.npmjs.org/ttystudio
+22 verbose request where is https://registry.npmjs.org/ttystudio
+23 info trying registry request attempt 1 at 3:12:40 AM
+24 http GET https://registry.npmjs.org/ttystudio
+25 http 200 https://registry.npmjs.org/ttystudio
+26 silly registry.get cb [ 200,
+26 silly registry.get   { server: 'nginx/1.10.1',
+26 silly registry.get     'content-type': 'application/json',
+26 silly registry.get     'last-modified': 'Wed, 29 Mar 2017 09:39:06 GMT',
+26 silly registry.get     etag: 'W/"58db80ba-7c23"',
+26 silly registry.get     'content-encoding': 'gzip',
+26 silly registry.get     'cache-control': 'max-age=300',
+26 silly registry.get     'content-length': '6028',
+26 silly registry.get     'accept-ranges': 'bytes',
+26 silly registry.get     date: 'Thu, 06 Jul 2017 02:12:41 GMT',
+26 silly registry.get     via: '1.1 varnish',
+26 silly registry.get     age: '0',
+26 silly registry.get     connection: 'close',
+26 silly registry.get     'x-served-by': 'cache-mad9433-MAD',
+26 silly registry.get     'x-cache': 'MISS',
+26 silly registry.get     'x-cache-hits': '0',
+26 silly registry.get     'x-timer': 'S1499307161.347999,VS0,VE327',
+26 silly registry.get     vary: 'Accept-Encoding' } ]
+27 silly addNameRange number 2 { name: 'ttystudio', range: '*', hasData: true }
+28 silly addNameRange versions [ 'ttystudio',
+28 silly addNameRange   [ '0.0.1',
+28 silly addNameRange     '0.0.2',
+28 silly addNameRange     '0.0.3',
+28 silly addNameRange     '0.0.4',
+28 silly addNameRange     '0.0.5',
+28 silly addNameRange     '0.0.6',
+28 silly addNameRange     '0.0.7',
+28 silly addNameRange     '0.0.8',
+28 silly addNameRange     '0.0.9',
+28 silly addNameRange     '0.0.10',
+28 silly addNameRange     '0.0.10-1',
+28 silly addNameRange     '0.0.11',
+28 silly addNameRange     '0.0.12',
+28 silly addNameRange     '0.0.13',
+28 silly addNameRange     '0.0.14',
+28 silly addNameRange     '0.0.15',
+28 silly addNameRange     '0.0.16' ] ]
+29 verbose addNamed [ 'ttystudio', '0.0.16' ]
+30 verbose addNamed [ '0.0.16', '0.0.16' ]
+31 silly lockFile 715b09b4-ttystudio-0-0-16 ttystudio@0.0.16
+32 verbose lock ttystudio@0.0.16 /home/agro/.npm/715b09b4-ttystudio-0-0-16.lock
+33 silly lockFile a96737a9-g-ttystudio-ttystudio-0-0-16-tgz https://registry.npmjs.org/ttystudio/-/ttystudio-0.0.16.tgz
+34 verbose lock https://registry.npmjs.org/ttystudio/-/ttystudio-0.0.16.tgz /home/agro/.npm/a96737a9-g-ttystudio-ttystudio-0-0-16-tgz.lock
+35 verbose addRemoteTarball [ 'https://registry.npmjs.org/ttystudio/-/ttystudio-0.0.16.tgz',
+35 verbose addRemoteTarball   'a2d11179c3fee95f2d6fc3d2c537577f4f1255e4' ]
+36 info retry fetch attempt 1 at 3:12:41 AM
+37 verbose fetch to= /tmp/npm-10128-No6bjLlt/registry.npmjs.org/ttystudio/-/ttystudio-0.0.16.tgz
+38 http GET https://registry.npmjs.org/ttystudio/-/ttystudio-0.0.16.tgz
+39 http 200 https://registry.npmjs.org/ttystudio/-/ttystudio-0.0.16.tgz
+40 silly lockFile a96737a9-g-ttystudio-ttystudio-0-0-16-tgz https://registry.npmjs.org/ttystudio/-/ttystudio-0.0.16.tgz
+41 silly lockFile a96737a9-g-ttystudio-ttystudio-0-0-16-tgz https://registry.npmjs.org/ttystudio/-/ttystudio-0.0.16.tgz
+42 silly lockFile 715b09b4-ttystudio-0-0-16 ttystudio@0.0.16
+43 silly lockFile 715b09b4-ttystudio-0-0-16 ttystudio@0.0.16
+44 silly lockFile 9fc48214-ttystudio ttystudio@
+45 silly lockFile 9fc48214-ttystudio ttystudio@
+46 silly resolved [ { name: 'ttystudio',
+46 silly resolved     description: 'A terminal-to-gif recorder minus the headaches.',
+46 silly resolved     author: { name: 'Christopher Jeffrey' },
+46 silly resolved     version: '0.0.16',
+46 silly resolved     license: 'MIT',
+46 silly resolved     main: './index.js',
+46 silly resolved     bin: { ttystudio: './bin/ttystudio' },
+46 silly resolved     scripts: { start: './bin/ttystudio ~/ttystudio-test.gif' },
+46 silly resolved     man: [ './man/ttystudio.1' ],
+46 silly resolved     preferGlobal: true,
+46 silly resolved     repository: { type: 'git', url: 'git://github.com/chjj/ttystudio.git' },
+46 silly resolved     homepage: 'https://github.com/chjj/ttystudio',
+46 silly resolved     bugs: { url: 'http://github.com/chjj/ttystudio/issues' },
+46 silly resolved     keywords: [ 'terminal', 'tty', 'record', 'recorder', 'gif', 'png', 'apng' ],
+46 silly resolved     tags: [ 'terminal', 'tty', 'record', 'recorder', 'gif', 'png', 'apng' ],
+46 silly resolved     dependencies:
+46 silly resolved      { blessed: '>=0.1.80',
+46 silly resolved        'term.js': '>=0.0.7',
+46 silly resolved        'pty.js': '>=0.3.0' },
+46 silly resolved     gitHead: 'b270fecc03552d29c7fbf7548d2633f2216272f8',
+46 silly resolved     _id: 'ttystudio@0.0.16',
+46 silly resolved     _shasum: 'a2d11179c3fee95f2d6fc3d2c537577f4f1255e4',
+46 silly resolved     _from: 'ttystudio@',
+46 silly resolved     _npmVersion: '2.14.0',
+46 silly resolved     _nodeVersion: '0.12.7',
+46 silly resolved     _npmUser: { name: 'chjj', email: 'chjjeffrey@gmail.com' },
+46 silly resolved     maintainers: [ [Object] ],
+46 silly resolved     dist:
+46 silly resolved      { shasum: 'a2d11179c3fee95f2d6fc3d2c537577f4f1255e4',
+46 silly resolved        tarball: 'https://registry.npmjs.org/ttystudio/-/ttystudio-0.0.16.tgz' },
+46 silly resolved     directories: {},
+46 silly resolved     _resolved: 'https://registry.npmjs.org/ttystudio/-/ttystudio-0.0.16.tgz' } ]
+47 info install ttystudio@0.0.16 into /usr/local/lib
+48 info installOne ttystudio@0.0.16
+49 verbose lib/node_modules/ttystudio unbuild
+50 verbose tar unpack /home/agro/.npm/ttystudio/0.0.16/package.tgz
+51 silly lockFile c95540c8-local-lib-node-modules-ttystudio tar:///usr/local/lib/node_modules/ttystudio
+52 verbose lock tar:///usr/local/lib/node_modules/ttystudio /home/agro/.npm/c95540c8-local-lib-node-modules-ttystudio.lock
+53 silly lockFile 1c1e8b33-npm-ttystudio-0-0-16-package-tgz tar:///home/agro/.npm/ttystudio/0.0.16/package.tgz
+54 verbose lock tar:///home/agro/.npm/ttystudio/0.0.16/package.tgz /home/agro/.npm/1c1e8b33-npm-ttystudio-0-0-16-package-tgz.lock
+55 silly gunzTarPerm modes [ '755', '644' ]
+56 error tar.unpack untar error /home/agro/.npm/ttystudio/0.0.16/package.tgz
+57 silly lockFile c95540c8-local-lib-node-modules-ttystudio tar:///usr/local/lib/node_modules/ttystudio
+58 silly lockFile c95540c8-local-lib-node-modules-ttystudio tar:///usr/local/lib/node_modules/ttystudio
+59 silly lockFile 1c1e8b33-npm-ttystudio-0-0-16-package-tgz tar:///home/agro/.npm/ttystudio/0.0.16/package.tgz
+60 silly lockFile 1c1e8b33-npm-ttystudio-0-0-16-package-tgz tar:///home/agro/.npm/ttystudio/0.0.16/package.tgz
+61 verbose lib/node_modules/ttystudio unbuild
+62 error Error: EACCES: permission denied, mkdir '/usr/local/lib/node_modules'
+62 error     at Error (native)
+62 error  { [Error: EACCES: permission denied, mkdir '/usr/local/lib/node_modules']
+62 error   errno: -13,
+62 error   code: 'EACCES',
+62 error   syscall: 'mkdir',
+62 error   path: '/usr/local/lib/node_modules',
+62 error   fstream_type: 'Directory',
+62 error   fstream_path: '/usr/local/lib/node_modules/ttystudio',
+62 error   fstream_class: 'DirWriter',
+62 error   fstream_stack:
+62 error    [ '/usr/lib/nodejs/fstream/lib/writer.js:171:25',
+62 error      '/usr/lib/nodejs/mkdirp/index.js:46:53',
+62 error      'FSReqWrap.oncomplete (fs.js:82:15)' ] }
+63 error Please try running this command again as root/Administrator.
+64 error System Linux 4.9.0-1-amd64
+65 error command "/usr/bin/nodejs" "/usr/bin/npm" "install" "ttystudio" "-g"
+66 error cwd /home/agro/github/youtube-or-pornhub/zeno
+67 error node -v v4.7.2
+68 error npm -v 1.4.21
+69 error path /usr/local/lib/node_modules
+70 error syscall mkdir
+71 error fstream_path /usr/local/lib/node_modules/ttystudio
+72 error fstream_type Directory
+73 error fstream_class DirWriter
+74 error code EACCES
+75 error errno -13
+76 error stack Error: EACCES: permission denied, mkdir '/usr/local/lib/node_modules'
+76 error stack     at Error (native)
+77 error fstream_stack /usr/lib/nodejs/fstream/lib/writer.js:171:25
+77 error fstream_stack /usr/lib/nodejs/mkdirp/index.js:46:53
+77 error fstream_stack FSReqWrap.oncomplete (fs.js:82:15)
+78 verbose exit [ -13, true ]

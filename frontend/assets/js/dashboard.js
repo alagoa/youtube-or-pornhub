@@ -1,6 +1,6 @@
 var dashboard = dashboard || {};
 
-var apiurl = 'http://10.0.2.15:5000'
+var apiurl = 'http://127.0.1.1:5000'
 
 dashboard.getGraph = function () {
 
