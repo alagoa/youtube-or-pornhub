@@ -1,3 +1,5 @@
+![alt text](/zeno/logo.png)
+
 # youtube-or-pornhub
 
 **Zeno** is a tool that, by analyzing the traffic of a given network, can detect what service is being used. It can detect if the user is browsing, listening to Spotify (or both), watching a Youtube video... and even differentiate it from a Pornhub video!
@@ -39,12 +41,12 @@ For example:
 
 ```python pcap.py -i eth0 -c 192.1.1.10/0 -s 0.0.0.0/0```
 
-![]({{site.baseurl}}/misc/terminal.gif)
-
 With the command above we are capturing packets on the interface eth0. The client network is the IP on that interface and the service IP is 0.0.0.0/0, which means we will capture all the arriving packets.
+
+![alt text](/misc/terminal.gif)
 
 **NOTE**: You may need to run the above command as root, if you don't have permissions to use _tshark_. Other solutions can be found [here](https://wiki.wireshark.org/CaptureSetup/CapturePrivileges).
 
 You can also view the info using the **dashboard.html** in the **frontend** folder.
 
-![]({{site.baseurl}}/misc/dashboard.gif)
+![alt text](misc/dashboard.gif)
