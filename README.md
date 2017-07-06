@@ -1,11 +1,16 @@
-![alt text](/zeno/logo.png)
 
-# youtube-or-pornhub
+# youtube-or-pornhub  ![alt text](/zeno/logo.png)
+
 
 **Zeno** is a tool that, by analyzing the traffic of a given network, can detect what service is being used. It can detect if the user is browsing, listening to Spotify (or both), watching a Youtube video... and even differentiate it from a Pornhub video!
 
 The analysis of the traffic is non-intrusive, so this will work even on ciphered traffic.
 
+Currently, this tool can identify:
+- YouTube       ![alt text](/misc/youtube_logo.png)
+- Regular Browsing       ![alt text](/misc/browser_logo.png)
+- Spotify       ![alt text](/misc/spotify_logo.png)
+- PornHub       ![alt text](/misc/pornhub_logo.png)
 ___________________________________________________________________________________________
 
 ## Dependencies:
@@ -50,3 +55,51 @@ With the command above we are capturing packets on the interface eth0. The clien
 You can also view the info using the **dashboard.html** in the **frontend** folder.
 
 ![alt text](misc/dashboard.gif)
+
+## Changelog
+
+### [1.1.0] - 06/07/2017
+#### Changed
+- Repo made public :)
+- General repo cleanup
+
+### [1.0.1] - 15/06/2017
+#### Added
+- New captures
+#### Changed
+- Frontend bug fix
+
+### [1.0.0] - 7/06/2017 Out of beta!
+#### Added
+- Classifying tool updated
+- Flask API to send info
+- Frontend to see info
+#### Removed
+- Deprecated files
+
+### [0.4.0] - 6/06/2017
+#### Added
+- Multithreading - can capture and analyze at the same time
+
+### [0.3.1] - 29/05/2017
+#### Added
+- New captures
+#### Changed
+- Normalization of data
+
+### [0.3.0] - 15/05/2017
+#### Changed
+- Classifying tool updated
+
+### [0.2.0] - 14/05/2017
+#### Added
+- Spotify classfication
+- New captures
+
+### [0.1.0] - 12/04/2017
+#### Added
+- Youtube classification
+- Browser classification
+- New captures
+
+
