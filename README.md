@@ -1,5 +1,5 @@
 
-# youtube-or-pornhub  ![alt text](/zeno/logo.png)
+# Zeno  ![alt text](/zeno/logo.png)
 
 
 **Zeno** is a tool that, by analyzing the traffic of a given network, can detect what service is being used. It can detect if the user is browsing, listening to Spotify (or both), watching a Youtube video... and even differentiate it from a Pornhub video!
