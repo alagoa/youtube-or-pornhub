@@ -1,3 +1,7 @@
+This project was a precursor to the work I did on my Master's thesis, which is much better and complete. You can read about it [here](https://github.com/alagoa/masters-dissertation/blob/master/dissertation.pdf).
+
+___________________________________________________________________________________________
+
 
 # Zeno  ![alt text](/zeno/logo.png)
 
